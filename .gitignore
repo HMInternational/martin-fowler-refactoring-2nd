@@ -1,4 +1,9 @@
 node_modules
-
-# docs
-template.md
+.DS_Store
+dist
+dist-ssr
+*.local
+node_modules/*
+.idea
+/public/tinymce/
+.env.development.local
