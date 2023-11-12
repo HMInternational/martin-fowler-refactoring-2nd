@@ -13,9 +13,9 @@ const aReading = enrichReading(rawReading);
 const basicChargeAmount = aReading.baseCharge;
 
 function enrichReading(original) {
-	const result = _.cloneDeep(original);
-	result.baseCharge = calculateBaseCharge(result);
-	return result;
+  const result = _.cloneDeep(original);
+  result.baseCharge = calculateBaseCharge(result);
+  return result;
 }
 
 module.exports = basicChargeAmount;

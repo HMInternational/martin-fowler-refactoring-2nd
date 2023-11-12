@@ -8,8 +8,8 @@
 console.log('test');
 
 describe('test', function () {
-	it('success', function (done) {
-		console.log('test');
-		done();
-	});
+  it('success', function (done) {
+    console.log('test');
+    done();
+  });
 });

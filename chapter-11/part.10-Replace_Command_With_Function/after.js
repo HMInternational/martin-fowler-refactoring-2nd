@@ -16,9 +16,9 @@
 // }
 
 function charge(customer, usage, provider) {
-	// 최상위 charge() 함수로 인라인
-	const baseCharge = customer.baseRate * usage;
-	return baseCharge + provider.connectionCharge;
+  // 최상위 charge() 함수로 인라인
+  const baseCharge = customer.baseRate * usage;
+  return baseCharge + provider.connectionCharge;
 }
 
 module.exports = charge;

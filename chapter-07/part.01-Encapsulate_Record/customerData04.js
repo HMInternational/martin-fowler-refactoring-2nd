@@ -15,39 +15,44 @@ console.log(customerData[customerID].usages[year][month]);
 
 // 읽기 예
 function compareUsage(customerID, laterYear, month) {
-	// const later = customerData[customerID].usages[laterYear][month];
-	// const earlier = customerData[customerID].usages[laterYear - 1][month];
-	const later = getCustomerData().usage(customerID, laterYear, month);
-	const earlier = getCustomerData().usage(customerID, laterYear - 1, month);
-	return { laterAmount: later, change: later - earlier };
+  // const later = customerData[customerID].usages[laterYear][month];
+  // const earlier = customerData[customerID].usages[laterYear - 1][month];
+  const later = getCustomerData().usage(customerID, laterYear, month);
+  const earlier = getCustomerData().usage(customerID, laterYear - 1, month);
+  return { laterAmount: later, change: later - earlier };
 }
 
 class CustomerData {
-	constructor(data) {
-		this._data = data;
-	}
-	usage(customerID, year, month) {
-		return this._data[customerID].usages[year][month];
-	}
-	get rawData() {
-		return _.cloneDeep(this._data);
-	}
+  constructor(data) {
+    this._data = data;
+  }
+
+  get rawData() {
+    return _.cloneDeep(this._data);
+  }
+
+  usage(customerID, year, month) {
+    return this._data[customerID].usages[year][month];
+  }
 }
 
 // 최상위
 function getCustomerData() {
-	return customerData;
+  return customerData;
 }
+
 function getRawDataOfCustomers() {
-	return customerData._data;
+  return customerData._data;
 }
+
 function setRawDataOfCustomers(arg) {
-	customerData = new CustomerData(arg);
+  customerData = new CustomerData(arg);
 }
+
 // 쓰기 예
 // getRawDataOfCustomers()[customerID].usages[year][month] = amount;
 getCustomerData().setUsage(customerID, year, month, amount);
 
 function setUsage(customerID, year, month, amount) {
-	getRawDataOfCustomers()[customerID].usages[year][month] = amount;
+  getRawDataOfCustomers()[customerID].usages[year][month] = amount;
 }

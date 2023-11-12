@@ -1,5 +1,5 @@
 function inNewEngland(stateCode) {
-	return ['MA', 'CT', 'ME', 'VT', 'NH', 'RI'].includes(stateCode);
+  return ['MA', 'CT', 'ME', 'VT', 'NH', 'RI'].includes(stateCode);
 }
 
 // 함수 호출문
