@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 // 공연료 청구서를 출력하는 코드
 function statement(invoice, plays) {
   let totalAmount = 0;
@@ -51,11 +49,4 @@ function statement(invoice, plays) {
   return result;
 }
 
-// const invoices = fs.readFileSync('./invoices.json');
-const invoices = JSON.parse(fs.readFileSync('./invoices.json').toString());
-const plays = JSON.parse(fs.readFileSync('./plays.json').toString());
-
-// console.log(invoices);
-const [invoicesData] = invoices;
-// statement(data, plays);
-console.log(statement(invoicesData, plays));
+module.exports = { statement };
