@@ -7,3 +7,4 @@ node_modules/*
 .idea
 /public/tinymce/
 .env.development.local
+.nyc_output
