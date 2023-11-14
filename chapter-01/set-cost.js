@@ -73,7 +73,6 @@ function createPerformance(performanceData, plays) {
   const performance = {};
   const play = playFor(performanceData, plays);
   performance.audience = performanceData.audience;
-  performance.playID = performanceData.playID;
   performance.name = play.name;
   performance.type = play.type;
   return performance;
