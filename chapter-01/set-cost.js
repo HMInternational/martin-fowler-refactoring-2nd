@@ -110,7 +110,6 @@ class Performance {
 class Tragedy extends Performance {
   audience;
   name;
-  type = 'tragedy';
 
   constructor(audience, name) {
     super();
@@ -135,7 +134,6 @@ class Tragedy extends Performance {
 class Comedy extends Performance {
   audience;
   name;
-  type = 'comedy';
 
   constructor(audience, name) {
     super();
