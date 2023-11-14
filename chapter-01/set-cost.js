@@ -47,7 +47,14 @@ function createInvoice(invoiceData, plays) {
 
 function createPerformance(performanceData, plays) {
   const play = playFor(performanceData, plays);
-  return new Performance(performanceData.audience, play.name, play.type);
+  switch (play.type) {
+    case 'tragedy':
+      return new Tragedy(performanceData.audience, play.name);
+    case 'comedy':
+      return new Comedy(performanceData.audience, play.name);
+    default:
+      throw new Error(`알 수 없는 장르: ${play.type}`);
+  }
 }
 
 function playFor(aPerformance, plays) {
@@ -89,14 +96,102 @@ class IPerformance {
    *  @abstract
    */
   volumeCredits() {
-    throw new Error('서브클래스에서 구현해야 합니다.')
+    throw new Error('서브클래스에서 구현해야 합니다.');
   }
 
   /**
    *  @abstract
    */
   amount() {
-    throw new Error('서브클래스에서 구현해야 합니다.')
+    throw new Error('서브클래스에서 구현해야 합니다.');
+  }
+}
+
+class Tragedy extends IPerformance {
+  audience;
+  name;
+  type = 'tragedy';
+
+  constructor(audience, name) {
+    super();
+    this.audience = audience;
+    this.name = name;
+  }
+
+  volumeCredits() {
+    let volumeCredits = Math.max(this.audience - 30, 0);
+    // 희극 관객 5명마다 추가 포인트를 제공한다.
+    if ('comedy' === this.type) {
+      volumeCredits += Math.floor(this.audience / 5);
+    }
+    return volumeCredits;
+  }
+
+  amount() {
+    let amount = 0;
+    switch (this.type) {
+      case 'tragedy': // 비극
+        amount = 40000;
+        if (this.audience > 30) {
+          // thisAmount += 1000 * (perf.audience - 30);
+          amount += 1000 * (this.audience - 30);
+        }
+        break;
+      case 'comedy': // 희극
+        amount = 30000;
+        if (this.audience > 20) {
+          amount += 10000 + 500 * (this.audience - 20);
+        }
+        amount += 300 * this.audience;
+        break;
+      default:
+        throw new Error(`알 수 없는 장르: ${this.type}`);
+    }
+    return amount;
+  }
+}
+
+class Comedy extends IPerformance {
+  audience;
+  name;
+  type = 'comedy';
+
+  constructor(audience, name) {
+    super();
+    this.audience = audience;
+    this.name = name;
+  }
+
+  volumeCredits() {
+    let volumeCredits = Math.max(this.audience - 30, 0);
+    // 희극 관객 5명마다 추가 포인트를 제공한다.
+    if ('comedy' === this.type) {
+      volumeCredits += Math.floor(this.audience / 5);
+    }
+    return volumeCredits;
+  }
+
+  amount() {
+    let amount = 0;
+    switch (this.type) {
+      case 'tragedy': // 비극
+        amount = 40000;
+        if (this.audience > 30) {
+          // thisAmount += 1000 * (perf.audience - 30);
+          amount += 1000 * (this.audience - 30);
+        }
+        break;
+      case 'comedy': // 희극
+        amount = 30000;
+        if (this.audience > 20) {
+          amount += 10000 + 500 * (this.audience - 20);
+        }
+        amount += 300 * this.audience;
+        break;
+      default:
+        throw new Error(`알 수 없는 장르: ${this.type}`);
+    }
+    return amount;
   }
 }
 
@@ -120,6 +215,7 @@ class Performance extends IPerformance {
     }
     return volumeCredits;
   }
+
   amount() {
     let amount = 0;
     switch (this.type) {
