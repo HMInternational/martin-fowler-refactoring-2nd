@@ -1,5 +1,7 @@
 // 공연료 청구서를 출력하는 코드
-function statement(invoice, plays) {
+function statement(invoiceData, plays) {
+  const invoice = createInvoice(invoiceData, plays);
+
   let totalAmount = 0;
   let totalVolumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
@@ -48,6 +50,24 @@ function statement(invoice, plays) {
   result += `적립 포인트: ${totalVolumeCredits}점 \n`;
   return result;
 }
+
+function createInvoice(invoiceData, plays) {
+  const invoice = {};
+  invoice.customer = invoiceData.customer;
+  invoice.performances = invoiceData.performances.map((performance) => createPerformance(performance, plays));
+  return invoice;
+}
+
+function createPerformance(performanceData, plays) {
+  const performance = {};
+  const play = playFor(performanceData, plays);
+  performance.audience = performanceData.audience;
+  performance.playID = performanceData.playID;
+  performance.name = play.name;
+  performance.type = play.type;
+  return performance;
+}
+
 
 function playFor(aPerformance, plays) {
   return plays[aPerformance.playID];
