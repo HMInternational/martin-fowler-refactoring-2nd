@@ -13,13 +13,14 @@ function statement(invoiceData, plays) {
 
   for (const aPerformance of invoice.performances) {
     const amount = amountFor(aPerformance);
+    totalAmount += amount;
 
     // 포인트를 적립한다.
     const volumeCredits = volumeCreditsFor(aPerformance);
     totalVolumeCredits += volumeCredits;
+
     // 청구 내역을 출력한다.
     result += ` ${aPerformance.name}: ${format(amount / 100)} (${aPerformance.audience}석)\n`;
-    totalAmount += amount;
   }
 
   // return
