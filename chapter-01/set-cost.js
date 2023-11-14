@@ -12,11 +12,11 @@ function statement(invoiceData, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    const amount = aPerformance.amountFor();
+    const amount = aPerformance.amount();
     totalAmount += amount;
 
     // 포인트를 적립한다.
-    const volumeCredits = aPerformance.volumeCreditsFor();
+    const volumeCredits = aPerformance.volumeCredits();
     totalVolumeCredits += volumeCredits;
 
     // 청구 내역을 출력한다.
@@ -56,7 +56,7 @@ class Performance {
     this.type = type;
   }
 
-  volumeCreditsFor() {
+  volumeCredits() {
     let volumeCredits = Math.max(this.audience - 30, 0);
     // 희극 관객 5명마다 추가 포인트를 제공한다.
     if ('comedy' === this.type) {
@@ -65,7 +65,7 @@ class Performance {
     return volumeCredits;
   }
 
-  amountFor() {
+  amount() {
     let amount = 0;
 
     switch (this.type) {
