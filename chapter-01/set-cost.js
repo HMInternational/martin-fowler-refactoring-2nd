@@ -1,7 +1,10 @@
 // 공연료 청구서를 출력하는 코드
 function statement(invoiceData, plays) {
   const invoiceResult = calculateAndGetInvoice(invoiceData, plays);
+  return formatPlainText(invoiceResult);
+}
 
+function formatPlainText(invoiceResult) {
   let result = `청구 내역 (고객명: ${invoiceResult.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
     style: 'currency',
