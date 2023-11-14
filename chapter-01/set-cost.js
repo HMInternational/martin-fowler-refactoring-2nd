@@ -3,20 +3,23 @@ function statement(invoiceData, plays) {
   const invoice = createInvoice(invoiceData, plays);
 
   let totalAmount = 0;
+  for (const aPerformance of invoice.performances) {
+    totalAmount += aPerformance.amount();
+  }
+
   let totalVolumeCredits = 0;
+  for (const aPerformance of invoice.performances) {
+    // 포인트를 적립한다.
+    totalVolumeCredits += aPerformance.volumeCredits();
+  }
+
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
   }).format;
-
   for (const aPerformance of invoice.performances) {
-    totalAmount += aPerformance.amount();
-
-    // 포인트를 적립한다.
-    totalVolumeCredits += aPerformance.volumeCredits();
-
     // 청구 내역을 출력한다.
     result += ` ${aPerformance.name}: ${format(aPerformance.amount() / 100)} (${aPerformance.audience}석)\n`;
   }
