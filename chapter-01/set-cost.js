@@ -2,9 +2,7 @@
 function statement(invoiceData, plays) {
   const invoice = createInvoice(invoiceData, plays);
 
-  const totalAmount = invoice.totalAmount();
-  const totalVolumeCredits = invoice.totalVolumeCredits();
-  const invoiceDto = calculateAndGetDto(invoice);
+  const invoiceResult = calculateAndGetResult(invoice);
 
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
@@ -18,12 +16,12 @@ function statement(invoiceData, plays) {
   }
 
   // return
-  result += `총액: ${format(totalAmount / 100)}\n`;
-  result += `적립 포인트: ${totalVolumeCredits}점 \n`;
+  result += `총액: ${format(invoice.totalAmount() / 100)}\n`;
+  result += `적립 포인트: ${invoice.totalVolumeCredits()}점 \n`;
   return result;
 }
 
-function calculateAndGetDto(invoice) {
+function calculateAndGetResult(invoice) {
   return {
     customer: invoice.customer,
     totalAmount: invoice.totalAmount(),
