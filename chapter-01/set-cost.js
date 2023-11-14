@@ -40,10 +40,9 @@ function totalAmountFor(invoice) {
 }
 
 function createInvoice(invoiceData, plays) {
-  const invoice = {};
-  invoice.customer = invoiceData.customer;
-  invoice.performances = invoiceData.performances.map((performance) => createPerformance(performance, plays));
-  return invoice;
+  const customer = invoiceData.customer;
+  const performances = invoiceData.performances.map((performance) => createPerformance(performance, plays));
+  return new Invoice(customer, performances);
 }
 
 function createPerformance(performanceData, plays) {
@@ -53,6 +52,16 @@ function createPerformance(performanceData, plays) {
 
 function playFor(aPerformance, plays) {
   return plays[aPerformance.playID];
+}
+
+class Invoice {
+  customer;
+  performances;
+
+  constructor(customer, performances) {
+    this.customer = customer;
+    this.performances = performances;
+  }
 }
 
 class Performance {
