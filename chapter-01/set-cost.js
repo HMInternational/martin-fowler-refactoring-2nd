@@ -2,8 +2,8 @@
 function statement(invoiceData, plays) {
   const invoice = createInvoice(invoiceData, plays);
 
-  const totalAmount = totalAmountFor(invoice);
-  const totalVolumeCredits = totalVolumeCreditsFor(invoice);
+  const totalAmount = invoice.totalAmount();
+  const totalVolumeCredits = invoice.totalVolumeCredits();
 
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
@@ -20,23 +20,6 @@ function statement(invoiceData, plays) {
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${totalVolumeCredits}점 \n`;
   return result;
-}
-
-function totalVolumeCreditsFor(invoice) {
-  let totalVolumeCredits = 0;
-  for (const aPerformance of invoice.performances) {
-    // 포인트를 적립한다.
-    totalVolumeCredits += aPerformance.volumeCredits();
-  }
-  return totalVolumeCredits;
-}
-
-function totalAmountFor(invoice) {
-  let totalAmount = 0;
-  for (const aPerformance of invoice.performances) {
-    totalAmount += aPerformance.amount();
-  }
-  return totalAmount;
 }
 
 function createInvoice(invoiceData, plays) {
@@ -61,6 +44,23 @@ class Invoice {
   constructor(customer, performances) {
     this.customer = customer;
     this.performances = performances;
+  }
+
+  totalVolumeCredits() {
+    let totalVolumeCredits = 0;
+    for (const aPerformance of this.performances) {
+      // 포인트를 적립한다.
+      totalVolumeCredits += aPerformance.volumeCredits();
+    }
+    return totalVolumeCredits;
+  }
+
+  totalAmount() {
+    let totalAmount = 0;
+    for (const aPerformance of this.performances) {
+      totalAmount += aPerformance.amount();
+    }
+    return totalAmount;
   }
 }
 
