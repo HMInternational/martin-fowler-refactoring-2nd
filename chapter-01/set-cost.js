@@ -81,12 +81,32 @@ class Invoice {
   }
 }
 
-class Performance {
+/**
+ *  @abstract
+ */
+class IPerformance {
+  /**
+   *  @abstract
+   */
+  volumeCredits() {
+    throw new Error('서브클래스에서 구현해야 합니다.')
+  }
+
+  /**
+   *  @abstract
+   */
+  amount() {
+    throw new Error('서브클래스에서 구현해야 합니다.')
+  }
+}
+
+class Performance extends IPerformance {
   audience;
   name;
   type;
 
   constructor(audience, name, type) {
+    super();
     this.audience = audience;
     this.name = name;
     this.type = type;
@@ -100,10 +120,8 @@ class Performance {
     }
     return volumeCredits;
   }
-
   amount() {
     let amount = 0;
-
     switch (this.type) {
       case 'tragedy': // 비극
         amount = 40000;
