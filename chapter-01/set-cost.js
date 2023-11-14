@@ -119,33 +119,14 @@ class Tragedy extends Performance {
   }
 
   volumeCredits() {
-    let volumeCredits = Math.max(this.audience - 30, 0);
-    // 희극 관객 5명마다 추가 포인트를 제공한다.
-    if ('comedy' === this.type) {
-      volumeCredits += Math.floor(this.audience / 5);
-    }
-    return volumeCredits;
+    return Math.max(this.audience - 30, 0);
   }
 
   amount() {
-    let amount = 0;
-    switch (this.type) {
-      case 'tragedy': // 비극
-        amount = 40000;
-        if (this.audience > 30) {
-          // thisAmount += 1000 * (perf.audience - 30);
-          amount += 1000 * (this.audience - 30);
-        }
-        break;
-      case 'comedy': // 희극
-        amount = 30000;
-        if (this.audience > 20) {
-          amount += 10000 + 500 * (this.audience - 20);
-        }
-        amount += 300 * this.audience;
-        break;
-      default:
-        throw new Error(`알 수 없는 장르: ${this.type}`);
+    let amount = 40000;
+    if (this.audience > 30) {
+      // thisAmount += 1000 * (perf.audience - 30);
+      amount += 1000 * (this.audience - 30);
     }
     return amount;
   }
@@ -164,34 +145,19 @@ class Comedy extends Performance {
 
   volumeCredits() {
     let volumeCredits = Math.max(this.audience - 30, 0);
-    // 희극 관객 5명마다 추가 포인트를 제공한다.
-    if ('comedy' === this.type) {
-      volumeCredits += Math.floor(this.audience / 5);
-    }
+    volumeCredits += Math.floor(this.audience / 5);
     return volumeCredits;
   }
 
   amount() {
     let amount = 0;
-    switch (this.type) {
-      case 'tragedy': // 비극
-        amount = 40000;
-        if (this.audience > 30) {
-          // thisAmount += 1000 * (perf.audience - 30);
-          amount += 1000 * (this.audience - 30);
-        }
-        break;
-      case 'comedy': // 희극
-        amount = 30000;
-        if (this.audience > 20) {
-          amount += 10000 + 500 * (this.audience - 20);
-        }
-        amount += 300 * this.audience;
-        break;
-      default:
-        throw new Error(`알 수 없는 장르: ${this.type}`);
+    amount = 30000;
+    if (this.audience > 20) {
+      amount += 10000 + 500 * (this.audience - 20);
     }
+    amount += 300 * this.audience;
     return amount;
   }
 }
+
 module.exports = { statement };
