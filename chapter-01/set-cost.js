@@ -91,7 +91,7 @@ class Invoice {
 /**
  *  @abstract
  */
-class IPerformance {
+class Performance {
   /**
    *  @abstract
    */
@@ -107,7 +107,7 @@ class IPerformance {
   }
 }
 
-class Tragedy extends IPerformance {
+class Tragedy extends Performance {
   audience;
   name;
   type = 'tragedy';
@@ -151,7 +151,7 @@ class Tragedy extends IPerformance {
   }
 }
 
-class Comedy extends IPerformance {
+class Comedy extends Performance {
   audience;
   name;
   type = 'comedy';
