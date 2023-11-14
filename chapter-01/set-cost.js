@@ -4,20 +4,20 @@ function statement(invoiceData, plays) {
 
   const invoiceResult = calculateAndGetResult(invoice);
 
-  let result = `청구 내역 (고객명: ${invoice.customer})\n`;
+  let result = `청구 내역 (고객명: ${invoiceResult.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
   }).format;
-  for (const aPerformance of invoice.performances) {
+  for (const aPerformance of invoiceResult.performances) {
     // 청구 내역을 출력한다.
-    result += ` ${aPerformance.name}: ${format(aPerformance.amount() / 100)} (${aPerformance.audience}석)\n`;
+    result += ` ${aPerformance.name}: ${format(aPerformance.amount / 100)} (${aPerformance.audience}석)\n`;
   }
 
   // return
-  result += `총액: ${format(invoice.totalAmount() / 100)}\n`;
-  result += `적립 포인트: ${invoice.totalVolumeCredits()}점 \n`;
+  result += `총액: ${format(invoiceResult.totalAmount / 100)}\n`;
+  result += `적립 포인트: ${invoiceResult.totalVolumeCredits}점 \n`;
   return result;
 }
 
