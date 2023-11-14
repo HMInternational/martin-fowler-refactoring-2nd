@@ -12,26 +12,7 @@ function statement(invoiceData, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    let amount = 0;
-
-    switch (aPerformance.type) {
-      case 'tragedy': // 비극
-        amount = 40000;
-        if (aPerformance.audience > 30) {
-          // thisAmount += 1000 * (perf.audience - 30);
-          amount += 1000 * (aPerformance.audience - 30);
-        }
-        break;
-      case 'comedy': // 희극
-        amount = 30000;
-        if (aPerformance.audience > 20) {
-          amount += 10000 + 500 * (aPerformance.audience - 20);
-        }
-        amount += 300 * aPerformance.audience;
-        break;
-      default:
-        throw new Error(`알 수 없는 장르: ${aPerformance.type}`);
-    }
+    const amount = amountFor(aPerformance);
 
     // 포인트를 적립한다.
     totalVolumeCredits += Math.max(aPerformance.audience - 30, 0);
@@ -50,6 +31,30 @@ function statement(invoiceData, plays) {
   return result;
 }
 
+function amountFor(aPerformance) {
+  let amount = 0;
+
+  switch (aPerformance.type) {
+    case 'tragedy': // 비극
+      amount = 40000;
+      if (aPerformance.audience > 30) {
+        // thisAmount += 1000 * (perf.audience - 30);
+        amount += 1000 * (aPerformance.audience - 30);
+      }
+      break;
+    case 'comedy': // 희극
+      amount = 30000;
+      if (aPerformance.audience > 20) {
+        amount += 10000 + 500 * (aPerformance.audience - 20);
+      }
+      amount += 300 * aPerformance.audience;
+      break;
+    default:
+      throw new Error(`알 수 없는 장르: ${aPerformance.type}`);
+  }
+  return amount;
+}
+
 function createInvoice(invoiceData, plays) {
   const invoice = {};
   invoice.customer = invoiceData.customer;
@@ -66,7 +71,6 @@ function createPerformance(performanceData, plays) {
   performance.type = play.type;
   return performance;
 }
-
 
 function playFor(aPerformance, plays) {
   return plays[aPerformance.playID];
