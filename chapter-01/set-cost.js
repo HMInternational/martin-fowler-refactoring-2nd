@@ -12,15 +12,13 @@ function statement(invoiceData, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    const amount = aPerformance.amount();
-    totalAmount += amount;
+    totalAmount += aPerformance.amount();
 
     // 포인트를 적립한다.
-    const volumeCredits = aPerformance.volumeCredits();
-    totalVolumeCredits += volumeCredits;
+    totalVolumeCredits += aPerformance.volumeCredits();
 
     // 청구 내역을 출력한다.
-    result += ` ${aPerformance.name}: ${format(amount / 100)} (${aPerformance.audience}석)\n`;
+    result += ` ${aPerformance.name}: ${format(aPerformance.amount() / 100)} (${aPerformance.audience}석)\n`;
   }
 
   // return
