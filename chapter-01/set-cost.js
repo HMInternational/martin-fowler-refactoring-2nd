@@ -10,7 +10,7 @@ function statement(invoice, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    const play = plays[aPerformance.playID];
+    const play = playFor(aPerformance, plays);
     let amount = 0;
 
     switch (play.type) {
@@ -47,6 +47,10 @@ function statement(invoice, plays) {
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${totalVolumeCredits}점 \n`;
   return result;
+}
+
+function playFor(aPerformance, plays) {
+  return plays[aPerformance.playID];
 }
 
 module.exports = { statement };
