@@ -70,16 +70,24 @@ function createInvoice(invoiceData, plays) {
 }
 
 function createPerformance(performanceData, plays) {
-  const performance = {};
   const play = playFor(performanceData, plays);
-  performance.audience = performanceData.audience;
-  performance.name = play.name;
-  performance.type = play.type;
-  return performance;
+  return new Performance(performanceData.audience, play.name, play.type);
 }
 
 function playFor(aPerformance, plays) {
   return plays[aPerformance.playID];
+}
+
+class Performance {
+  audience;
+  name;
+  type;
+
+  constructor(audience, name, type) {
+    this.audience = audience;
+    this.name = name;
+    this.type = type;
+  }
 }
 
 module.exports = { statement };
