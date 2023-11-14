@@ -12,11 +12,11 @@ function statement(invoiceData, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    const amount = amountFor(aPerformance);
+    const amount = aPerformance.amountFor(aPerformance);
     totalAmount += amount;
 
     // 포인트를 적립한다.
-    const volumeCredits = volumeCreditsFor(aPerformance);
+    const volumeCredits = aPerformance.volumeCreditsFor(aPerformance);
     totalVolumeCredits += volumeCredits;
 
     // 청구 내역을 출력한다.
@@ -27,39 +27,6 @@ function statement(invoiceData, plays) {
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${totalVolumeCredits}점 \n`;
   return result;
-}
-
-function volumeCreditsFor(aPerformance) {
-  let volumeCredits = Math.max(aPerformance.audience - 30, 0);
-  // 희극 관객 5명마다 추가 포인트를 제공한다.
-  if ('comedy' === aPerformance.type) {
-    volumeCredits += Math.floor(aPerformance.audience / 5);
-  }
-  return volumeCredits;
-}
-
-function amountFor(aPerformance) {
-  let amount = 0;
-
-  switch (aPerformance.type) {
-    case 'tragedy': // 비극
-      amount = 40000;
-      if (aPerformance.audience > 30) {
-        // thisAmount += 1000 * (perf.audience - 30);
-        amount += 1000 * (aPerformance.audience - 30);
-      }
-      break;
-    case 'comedy': // 희극
-      amount = 30000;
-      if (aPerformance.audience > 20) {
-        amount += 10000 + 500 * (aPerformance.audience - 20);
-      }
-      amount += 300 * aPerformance.audience;
-      break;
-    default:
-      throw new Error(`알 수 없는 장르: ${aPerformance.type}`);
-  }
-  return amount;
 }
 
 function createInvoice(invoiceData, plays) {
@@ -87,6 +54,39 @@ class Performance {
     this.audience = audience;
     this.name = name;
     this.type = type;
+  }
+
+  volumeCreditsFor(aPerformance) {
+    let volumeCredits = Math.max(aPerformance.audience - 30, 0);
+    // 희극 관객 5명마다 추가 포인트를 제공한다.
+    if ('comedy' === aPerformance.type) {
+      volumeCredits += Math.floor(aPerformance.audience / 5);
+    }
+    return volumeCredits;
+  }
+
+  amountFor(aPerformance) {
+    let amount = 0;
+
+    switch (aPerformance.type) {
+      case 'tragedy': // 비극
+        amount = 40000;
+        if (aPerformance.audience > 30) {
+          // thisAmount += 1000 * (perf.audience - 30);
+          amount += 1000 * (aPerformance.audience - 30);
+        }
+        break;
+      case 'comedy': // 희극
+        amount = 30000;
+        if (aPerformance.audience > 20) {
+          amount += 10000 + 500 * (aPerformance.audience - 20);
+        }
+        amount += 300 * aPerformance.audience;
+        break;
+      default:
+        throw new Error(`알 수 없는 장르: ${aPerformance.type}`);
+    }
+    return amount;
   }
 }
 
