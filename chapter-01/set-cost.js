@@ -12,7 +12,7 @@ function statement(invoiceData, plays) {
   }).format;
 
   for (const aPerformance of invoice.performances) {
-    const play = playFor(aPerformance, plays);
+    const play = aPerformance;
     let amount = 0;
 
     switch (play.type) {
