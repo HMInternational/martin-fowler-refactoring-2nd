@@ -4,6 +4,7 @@ function statement(invoiceData, plays) {
 
   const totalAmount = invoice.totalAmount();
   const totalVolumeCredits = invoice.totalVolumeCredits();
+  const invoiceDto = calculateAndGetDto(invoice);
 
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
   const format = new Intl.NumberFormat('en-US', {
@@ -20,6 +21,21 @@ function statement(invoiceData, plays) {
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${totalVolumeCredits}점 \n`;
   return result;
+}
+
+function calculateAndGetDto(invoice) {
+  return {
+    customer: invoice.customer,
+    totalAmount: invoice.totalAmount(),
+    totalVolumeCredits: invoice.totalVolumeCredits(),
+    performances: invoice.performances.map((aPerformance) => {
+      return {
+        name: aPerformance.name,
+        amount: aPerformance.amount(),
+        audience: aPerformance.audience,
+      };
+    }),
+  };
 }
 
 function createInvoice(invoiceData, plays) {
