@@ -23,6 +23,5 @@ const alert = readingsOutsideRange(station,
   operating.temperatureCeiling);
 
 module.exports = {
-  readingsOutsideRange,
-  NumberRange,
+  readingsOutsideRange
 };
